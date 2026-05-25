@@ -8,11 +8,15 @@
           <div class="hero-content text-black flex-[1_1_320px] max-w-[540px] -mt-5 max-[980px]:max-w-full">
             <p class="greeting text-[1.25rem] font-semibold mb-3 max-[640px]:text-[1.05rem]">Hi, I am</p>
             <h1 class="name text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-[1.05] mb-3 tracking-[-0.04em] font-heading"><%= owner?.fullName || "John Doe" %></h1>
-            <p class="role text-base text-[#505050] font-semibold max-[640px]:text-[0.95rem] max-[980px]:text-[#424242]"><%= owner?.role || "Full Stack Developer" %></p> 
-            <div class="social-icons mt-8 flex gap-[0.95rem] flex-wrap max-[980px]:justify-center">
-              <a class="w-[42px] h-[42px] bg-[#d1d1d1] text-black rounded-md flex items-center justify-center text-base transition-all duration-300 hover:bg-[#b5b5b5] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="mailto:<%= owner?.email || 'hello@example.com' %>"><i class="fa-solid fa-at"></i></a>
-              <a class="w-[42px] h-[42px] bg-[#d1d1d1] text-black rounded-md flex items-center justify-center text-base transition-all duration-300 hover:bg-[#b5b5b5] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="<%= owner?.githubUrl || 'https://github.com/' %>" target="_blank"><i class="fa-brands fa-github"></i></a>
-              <a class="w-[42px] h-[42px] bg-[#d1d1d1] text-black rounded-md flex items-center justify-center text-base transition-all duration-300 hover:bg-[#b5b5b5] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="<%= owner?.linkedinUrl || 'https://linkedin.com/' %>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            <p class="role text-[1.1rem] text-[#111] font-bold uppercase tracking-[0.08em] mb-4 max-[640px]:text-[0.95rem]"><%= owner?.role || "Full Stack Developer" %></p> 
+            <p class="bio text-[1.05rem] text-[#555] leading-[1.7] mb-8 max-[980px]:mx-auto max-[980px]:max-w-[600px]"><%= owner?.bio || "Building intuitive digital experiences with clean UI and practical backend solutions." %></p>
+            <div class="action-buttons flex items-center gap-6 max-[980px]:justify-center flex-wrap">
+              <a href="#about" class="bg-[#111] text-white px-8 py-3.5 rounded-lg text-[0.95rem] font-bold tracking-[0.05em] transition-all duration-300 hover:bg-[#333] hover:-translate-y-1 hover:shadow-lg no-underline">More About Me</a>
+              <div class="social-icons flex gap-[0.95rem] flex-wrap">
+                <a class="w-[48px] h-[48px] bg-[#f0f0f0] text-black rounded-full flex items-center justify-center text-[1.1rem] transition-all duration-300 hover:bg-[#e0e0e0] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="mailto:<%= owner?.email || 'hello@example.com' %>"><i class="fa-solid fa-at"></i></a>
+                <a class="w-[48px] h-[48px] bg-[#f0f0f0] text-black rounded-full flex items-center justify-center text-[1.1rem] transition-all duration-300 hover:bg-[#e0e0e0] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="<%= owner?.githubUrl || 'https://github.com/' %>" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a class="w-[48px] h-[48px] bg-[#f0f0f0] text-black rounded-full flex items-center justify-center text-[1.1rem] transition-all duration-300 hover:bg-[#e0e0e0] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="<%= owner?.linkedinUrl || 'https://linkedin.com/' %>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+              </div>
             </div>
           </div>
           
@@ -26,11 +30,6 @@
               </div>
             <% } %>
             <img class="w-[min(100%,320px)] h-auto object-contain block brightness-120 rounded-[20px] transition-transform duration-500 hover:scale-[1.02] max-[980px]:w-[min(100%,280px)]" src="<%= owner?.profilePicUrl || 'https://ui-avatars.com/api/?name=John+Doe&background=random&size=300' %>" alt="<%= owner?.fullName || 'John Doe' %>">
-            <div class="infoBox w-full max-w-[480px] mx-auto bg-black/65 text-white p-8 text-[15px] font-medium rounded-xl grid gap-4 text-center z-10 relative shadow-yellow-glow -mt-[22px] max-[980px]:w-[min(100%-2.5rem,540px)] max-[980px]:mt-4 max-[640px]:p-5">
-                <div class="text-[1.1rem] font-bold tracking-[0.08em] uppercase"><%= owner?.role || "Web Developer" %></div>
-                <div class="leading-[1.7] text-white"><%= owner?.bio || "Building intuitive digital experiences with clean UI and practical backend solutions." %></div>
-                <a href="#about" class="text-[0.9rem] font-bold tracking-[0.12em] cursor-pointer text-inherit no-underline block">READ MORE</a>
-            </div>
           </div>
         </div>
       </main>
