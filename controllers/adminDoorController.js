@@ -392,20 +392,48 @@ const getAddProjectPage = (req, res) => {
 };
 
 const addProjects = async (req, res) => {
-  const { id, title, imageUrl, skills, description, sourceUrl, liveUrl } =
-    req.body;
-
+  const { id, title, skills, description, sourceUrl, liveUrl } = req.body;
   const db = getDB();
 
   try {
     const formData = {
       title,
-      imageUrl,
       skills,
       description,
       sourceUrl,
       liveUrl,
     };
+
+    let existingProject = null;
+    if (id) {
+      existingProject = await db.collection("FormData").findOne({ _id: new ObjectId(id) });
+    }
+
+    // Handle Image Upload
+    if (req.files && req.files.projectImage && req.files.projectImage[0]) {
+      const imgFile = req.files.projectImage[0];
+      
+      // Delete old image if exists
+      if (existingProject && existingProject.imagePublicId) {
+        try {
+          await deleteFromCloudinary(existingProject.imagePublicId, "image");
+        } catch (e) {
+          console.error("Old project image delete error:", e.message);
+        }
+      }
+
+      // Upload new image
+      const uploadResult = await uploadToCloudinary(imgFile.path, "portfolio/projects", "image");
+      formData.imageUrl = uploadResult.url;
+      formData.imagePublicId = uploadResult.publicId;
+    } else if (existingProject) {
+      // Keep existing image if no new file is uploaded
+      formData.imageUrl = existingProject.imageUrl;
+      formData.imagePublicId = existingProject.imagePublicId;
+    } else {
+      // If it's a new project and no image is uploaded
+      return res.status(400).json({ success: false, message: "Project image is required!" });
+    }
 
     if (id) {
       await db
@@ -425,6 +453,7 @@ const addProjects = async (req, res) => {
       message: "Project added successfully",
     });
   } catch (error) {
+    console.error("Add/Edit Project Error:", error);
     res.status(500).json({
       success: false,
       message: error.message,

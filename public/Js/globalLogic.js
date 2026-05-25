@@ -301,6 +301,37 @@ window.deleteQuickFile = async function(type) {
 // ==========================================
 // 2. Add Project Form Logic
 // ==========================================
+// ---- Project Image Preview ----
+const projectImageInput = document.getElementById("projectImage");
+const projectImagePreview = document.getElementById("projectImagePreview");
+const projectImagePreviewImg = document.getElementById("projectImagePreviewImg");
+const removeProjectImagePreview = document.getElementById("removeProjectImagePreview");
+const projectImageName = document.getElementById("projectImageName");
+
+if (projectImageInput) {
+  projectImageInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (file && file.type.startsWith("image/")) {
+      if (projectImageName) projectImageName.textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        if (projectImagePreviewImg) projectImagePreviewImg.src = e.target.result;
+        if (projectImagePreview) projectImagePreview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+if (removeProjectImagePreview) {
+  removeProjectImagePreview.addEventListener("click", function () {
+    if (projectImageInput) projectImageInput.value = "";
+    if (projectImagePreview) projectImagePreview.style.display = "none";
+    if (projectImagePreviewImg) projectImagePreviewImg.src = "";
+    if (projectImageName) projectImageName.textContent = "Choose an image...";
+  });
+}
+
 const addProjectForm = document.getElementById("addProject");
 const mssge = document.getElementById("message");
 
@@ -312,16 +343,12 @@ if (addProjectForm) {
     submitBtn.innerHTML = 'Saving... <i class="fa-solid fa-spinner fa-spin"></i>';
     submitBtn.disabled = true;
 
-    const formaData = new FormData(addProjectForm);
-    const data = Object.fromEntries(formaData.entries());
+    const formData = new FormData(addProjectForm);
 
     try {
       const response = await fetch("/admin/addProjects/add", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       const result = await response.json();
@@ -329,7 +356,11 @@ if (addProjectForm) {
       if (response.ok) {
         showToastMessage(mssge, "success", result.message || "Project saved successfully");
         // Optional: form clear karne ke liye if not editing
-        if (!data.id) addProjectForm.reset(); 
+        if (!formData.get("id")) {
+          addProjectForm.reset();
+          if (projectImagePreview) projectImagePreview.style.display = "none";
+          if (projectImageName) projectImageName.textContent = "Choose an image...";
+        } 
       } else {
         showToastMessage(mssge, "error", result.message);
       }

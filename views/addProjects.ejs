@@ -43,22 +43,45 @@
 
                 </div>
 
-                <!-- Image URL -->
+                <!-- Project Image Upload -->
                 <div class="input-group flex flex-col gap-2 mb-2.5">
 
-                    <label for="imageUrl" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
-                        Image Path / URL
+                    <label for="projectImage" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                        Project Image
                     </label>
 
-                    <input
-                        type="text"
-                        id="imageUrl"
-                        name="imageUrl"
-                        placeholder="e.g. ./assets/formassist.png"
-                        value="<%= formData?.imageUrl || '' %>"
-                        required
-                        class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
-                    >
+                    <% if (formData && formData.imageUrl) { %>
+                        <div class="mb-2 text-sm text-[#666]">
+                            Current Image:
+                            <div class="mt-2 w-[150px] h-[100px] border border-[#ddd] rounded-lg overflow-hidden bg-[#fafafa]">
+                                <img src="<%= formData.imageUrl %>" alt="Current project image" class="w-full h-full object-cover">
+                            </div>
+                            <span class="block mt-2 text-[#ff9800]">Upload a new image below to replace the current one.</span>
+                        </div>
+                    <% } %>
+
+                    <div class="w-full p-3.5 border border-[#ddd] border-dashed rounded-lg bg-[#fafafa] transition-all duration-300 hover:border-[#ff9800] hover:bg-[#fff9f2] flex flex-col gap-2 relative overflow-hidden focus-within:border-[#ff9800]">
+                        <div class="flex items-center gap-3 text-[#666] pointer-events-none">
+                            <i class="fa-solid fa-cloud-arrow-up text-[1.2rem] text-[#ff9800]"></i>
+                            <span id="projectImageName" class="font-medium">Choose an image...</span>
+                        </div>
+                        <input
+                            type="file"
+                            id="projectImage"
+                            name="projectImage"
+                            accept="image/*"
+                            <%= formData ? '' : 'required' %>
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        >
+                    </div>
+
+                    <!-- Live Preview -->
+                    <div id="projectImagePreview" class="hidden mt-2 relative w-[200px] h-[130px] rounded-lg overflow-hidden border border-[#ddd] shadow-sm group">
+                        <img id="projectImagePreviewImg" src="" alt="Preview" class="w-full h-full object-cover">
+                        <button type="button" id="removeProjectImagePreview" class="absolute top-2 right-2 w-[30px] h-[30px] rounded-full bg-black/60 text-white border-none flex justify-center items-center cursor-pointer opacity-0 transition-opacity duration-300 hover:bg-[#ff4444] group-hover:opacity-100 z-20" title="Remove image">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
 
                 </div>
 

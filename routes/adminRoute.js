@@ -31,7 +31,7 @@ adminRoute.post("/uploadQuickFile", checkAdminAuth, handleUpload, uploadQuickFil
 adminRoute.get("/addProject", checkAdminAuth, getAddProjectPage);
 adminRoute.get("/editProject/:id", checkAdminAuth, getEditProjectPage);
 adminRoute.delete("/deleteProject/:formId", checkAdminAuth, deleteProject);
-adminRoute.post("/addProjects/add", checkAdminAuth, addProjects);
+adminRoute.post("/addProjects/add", checkAdminAuth, handleUpload, addProjects);
 
 //login page
 adminRoute.get("/login", getLoginPage);
