@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #111111;
+  --color-purple-brand: purple;
+  --color-red-delete: #e74c3c;
+  --color-amber-edit: #f39c12;
+  
+  --font-sans: "Inter", "Segoe UI", sans-serif;
+  --font-heading: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+@layer components {
+  /* Diagonal gradient background for hero section */
+  .bg-hero-gradient {
+    background: linear-gradient(105deg, #e5e5e5 0%, #e5e5e5 50%, #000000 50%, #000000 100%);
+  }
+  @media (max-width: 980px) {
+    .bg-hero-gradient {
+      background: linear-gradient(180deg, #e5e5e5 0%, #e5e5e5 62%, #000000 62%);
+    }
+  }
+
+  /* Title box underline */
+  .title-box {
+    position: relative;
+    display: inline-block;
+  }
+  .title-box::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #000;
+    margin: 10px auto 0;
+    border-radius: 2px;
+  }
+
+  /* Custom Hexagon Icon */
+  .c-icon-hex {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  /* Hamburger Menu Animations */
+  .hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Custom Box Shadows */
+  .shadow-yellow-glow {
+    box-shadow: 0 0 5px yellow;
+  }
+}
+
+/* Toast Messages Animation */
+.skill-message {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  width: min(92vw, 420px);
+  border-radius: 12px;
+  opacity: 0;
+  transform: translate(-50%, -12px);
+  z-index: 9999999;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.skill-message.is-success,
+.skill-message.is-error {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.skill-message.is-success {
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  background: linear-gradient(to right, #f0fdf4, #dcfce7);
+}
+
+.skill-message.is-error {
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  background: linear-gradient(to right, #fef2f2, #fee2e2);
+}
+
+.skill-message-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+}
+
+.skill-message-text {
+  flex: 1;
+}
+
+.skill-message-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.08);
+  border: none;
+  cursor: pointer;
+}

@@ -1,0 +1,79 @@
+<%- include('./partials/head', {title: 'Admin Login' }) %>
+
+<body class="bg-[#f0f2f5] text-[#333] font-sans flex flex-col min-h-screen">
+    <%- include("./partials/navBar") %>
+
+    <main class="flex-grow flex justify-center items-center py-20 px-[5%] mt-16 max-[768px]:px-[15px] max-[768px]:py-[60px] max-[768px]:mt-[60px] min-h-[80vh]">
+        <div class="form-wrapper login-card bg-white w-full p-10 rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-[#e0e0e0] max-[768px]:p-6 max-w-[450px]">
+            <form method="post" action="/admin/login" class="modern-form flex flex-col gap-5" id="loginForm">
+                
+                <div class="form-header text-center mb-[35px] pb-5 border-b border-[#eee]">
+                    <h2 class="text-[2rem] text-[#111] font-extrabold m-0 mb-2.5 tracking-[-0.5px] max-[480px]:text-[1.6rem]">Welcome Back</h2>
+                    <p class="text-[#666] text-[0.95rem] m-0">Enter your credentials to access the admin dashboard.</p>
+                </div>
+
+                <!-- Email Input -->
+                <div class="input-group flex flex-col gap-2 mb-2.5">
+                    <label for="loginEmail" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">Email Address</label>
+                    <div class="input-with-icon relative flex items-center group">
+                        <i class="fa-solid fa-envelope input-icon absolute left-[15px] text-[#888] text-[1.1rem] transition-colors duration-300 z-10 group-focus-within:text-[#ff9800]"></i>
+                        <input type="email" id="loginEmail" name="email" placeholder="e.g. bhavesh@example.com" required class="w-full p-3.5 pl-[45px] border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]">
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="input-group flex flex-col gap-2 mb-2.5">
+                    <div class="flex justify-between items-center">
+                        <label for="loginPassword" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">Password</label>
+                        <a href="#" class="text-[0.85rem] text-[#ff9800] font-semibold no-underline hover:underline">Forgot Password?</a>
+                    </div>
+                    <div class="input-with-icon password-wrapper relative flex items-center group">
+                        <i class="fa-solid fa-lock input-icon absolute left-[15px] text-[#888] text-[1.1rem] transition-colors duration-300 z-10 group-focus-within:text-[#ff9800]"></i>
+                        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required class="w-full p-3.5 pl-[45px] pr-[45px] border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]">
+                        <i class="fa-solid fa-eye-slash toggle-password absolute right-[15px] text-[#888] cursor-pointer text-[1.1rem] transition-colors duration-300 hover:text-[#333] z-10" id="togglePassword" title="Show/Hide Password"></i>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit bg-[#ff9800] text-white p-4 border-none rounded-lg text-base font-bold cursor-pointer transition-all duration-300 flex justify-center items-center gap-2.5 w-full hover:bg-[#e68a00] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,152,0,0.3)] mt-6">
+                    <i class="fa-solid fa-right-to-bracket"></i> Secure Login
+                </button>
+                
+            </form>
+
+            <!-- Switch to Register Section -->
+            <div class="text-center mt-7 pt-6 border-t border-[#eee]">
+                <p class="text-[#555] text-[0.95rem] m-0">
+                    Don't have an account? 
+                    <a href="/admin/devDoor" class="text-[#ff9800] font-bold no-underline ml-[5px] hover:underline">
+                        Setup Profile <i class="fa-solid fa-user-plus ml-[3px]"></i>
+                    </a>
+                </p>
+            </div>
+
+        </div>
+        
+        <!-- Message Box -->
+        <section id="login-message" class="skill-message fixed top-6 left-1/2 -translate-x-1/2 w-[min(92vw,420px)] rounded-xl opacity-0 -translate-y-3 z-[9999999] transition-all duration-300 pointer-events-none" aria-live="polite"></section>
+    </main>
+
+    <%- include("./partials/footer") %>
+
+    <!-- Show/Hide Password Logic -->
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#loginPassword');
+
+        if(togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function (e) {
+                // Toggle the type attribute
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                // Toggle the eye slash icon
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+    </script>
+</body>
+</html>

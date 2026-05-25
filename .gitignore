@@ -1,0 +1,5 @@
+node_modules/
+.env
+npm-debug.log
+public/styles/output.css
+.DS_Store

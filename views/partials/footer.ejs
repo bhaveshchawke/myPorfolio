@@ -1,0 +1,45 @@
+<footer class="bg-[#111] text-white pt-16 pb-4 px-[5%] z-10">
+  <div class="max-w-[1100px] mx-auto grid grid-cols-[2fr_1fr_1fr] gap-12 border-b border-b-white/10 pb-10 max-[768px]:grid-cols-1 max-[768px]:text-center max-[768px]:gap-10">
+    <!-- Brand & About -->
+    <div class="footer-brand">
+      <h2 class="text-[1.8rem] font-extrabold mb-4"><%= admin?.fullName || "Bhavesh." %></h2>
+      <p class="text-[#aaa] max-w-[300px] leading-[1.6] mb-6 max-[768px]:mx-auto">
+        <%= admin?.bio || "Front-end Developer & UI Designer building intuitive, clean, and engaging digital experiences." %>
+      </p>
+      <div class="flex gap-4 max-[768px]:justify-center">
+        <a class="w-10 h-10 bg-white/10 flex items-center justify-center rounded-md text-white transition-[background,color] duration-300 hover:bg-white hover:text-black" href="<%= admin?.githubUrl || 'https://github.com/bhaveshchawke' %>" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a class="w-10 h-10 bg-white/10 flex items-center justify-center rounded-md text-white transition-[background,color] duration-300 hover:bg-white hover:text-black" href="<%= admin?.linkedinUrl || 'https://www.linkedin.com/in/bhavesh-chawke-607785317/' %>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a class="w-10 h-10 bg-white/10 flex items-center justify-center rounded-md text-white transition-[background,color] duration-300 hover:bg-white hover:text-black" href="mailto:<%= admin?.email || 'bhavesh@example.com' %>"><i class="fa-solid fa-envelope"></i></a>
+        <% if (typeof admin !== 'undefined' && admin && admin.isLoggedIn) { %>
+          <a class="w-10 h-10 bg-white/10 flex items-center justify-center rounded-md text-white transition-[background,color] duration-300 hover:bg-[#e74c3c] hover:text-white text-[#e74c3c]" href="/admin/logout" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-links">
+      <h3 class="text-[1.2rem] font-bold uppercase tracking-wider mb-5">Quick Links</h3>
+      <ul class="list-none p-0 m-0">
+        <li class="mb-3"><a class="text-[#aaa] no-underline transition-colors duration-300 hover:text-white" href="#about">About Me</a></li>
+        <li class="mb-3"><a class="text-[#aaa] no-underline transition-colors duration-300 hover:text-white" href="#skills">Skills</a></li>
+        <li class="mb-3"><a class="text-[#aaa] no-underline transition-colors duration-300 hover:text-white" href="#projects">Projects</a></li>
+        <li class="mb-3"><a class="text-[#aaa] no-underline transition-colors duration-300 hover:text-white" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-contact">
+      <h3 class="text-[1.2rem] font-bold uppercase tracking-wider mb-5">Contact Info</h3>
+      <p class="text-[#aaa] flex items-center gap-2.5 mb-3 max-[768px]:justify-center"><i class="fa-solid fa-location-dot"></i> Indore, Madhya Pradesh</p>
+      <p class="text-[#aaa] flex items-center gap-2.5 mb-3 max-[768px]:justify-center"><i class="fa-solid fa-envelope"></i> <%= admin?.email || "bhavesh@example.com" %></p>
+      <p class="text-[#aaa] flex items-center gap-2.5 mb-3 max-[768px]:justify-center"><i class="fa-solid fa-phone"></i> <%= admin?.phone || "+91 98765 43210" %></p>
+    </div>
+  </div>
+
+  <!-- Bottom Copyright Bar -->
+  <div class="text-center pt-6">
+    <p class="text-[#777] text-[0.85rem]">
+      &copy; <%= new Date().getFullYear() %> Bhavesh Chawke. All rights reserved.
+    </p>
+  </div>
+</footer>

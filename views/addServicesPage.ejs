@@ -1,0 +1,57 @@
+<%- include('./partials/head', { title: 'Add New Services' }) %>
+<body class="bg-[#f0f2f5] text-[#333] font-sans flex flex-col min-h-screen">
+    <%- include('./partials/navBar') %>
+
+    <main class="flex-grow flex justify-center items-center py-20 px-[5%] mt-16 max-[768px]:px-[15px] max-[768px]:py-[60px] max-[768px]:mt-[60px]">
+        <div class="form-wrapper add-project-card bg-white w-full p-10 rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-[#e0e0e0] max-[768px]:p-6 max-w-[800px]">
+            <div class="form-header text-center mb-[35px] pb-5 border-b border-[#eee]">
+                <h2 class="text-[2rem] text-[#111] font-extrabold m-0 mb-2.5 tracking-[-0.5px] max-[480px]:text-[1.6rem]">Add New Services</h2>
+                <p class="text-[#666] text-[0.95rem] m-0">Homepage par naye service cards (jaise Design, Development) add karein.</p>
+            </div>
+
+            <form class="modern-form flex flex-col gap-5" id="addServiceForm">
+                
+                <!-- Container jisme saari services aayengi -->
+                <div id="servicesContainer" class="flex flex-col gap-5">
+                    <div class="service-row relative bg-[#fafafa] p-[15px] rounded-lg border border-[#ddd] transition-all duration-300 hover:border-[#ccc] hover:shadow-[0_5px_15px_rgba(0,0,0,0.03)]">
+                        <button type="button" class="btn-remove-row hidden-btn hidden absolute top-2.5 right-2.5 bg-none border-none text-[#dc2626] cursor-pointer text-[1.2rem] hover:scale-110 transition-transform" title="Remove">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        
+                        <div class="input-row flex gap-[25px] max-[768px]:flex-col max-[768px]:gap-5">
+                            <div class="input-group flex-1 flex flex-col gap-2 mb-2.5">
+                                <label class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">Service Title</label>
+                                <input type="text" name="serviceTitles[]" placeholder="e.g. SEO OPTIMIZATION" required class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]">
+                            </div>
+                            <div class="input-group flex-1 flex flex-col gap-2 mb-2.5">
+                                <label class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">Icon Code (HTML)</label>
+                                <input type="text" name="serviceIcons[]" placeholder='e.g. <i class="fa-solid fa-magnifying-glass"></i>' required class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]">
+                            </div>
+                        </div>
+
+                        <div class="input-group flex flex-col gap-2 mb-2.5">
+                            <label class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">Service Description</label>
+                            <textarea name="serviceDescs[]" rows="3" placeholder="Brief description of the service..." required class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add More Button -->
+                <button type="button" id="addMoreServiceBtn" class="btn-add-more w-full py-3.5 bg-transparent border-2 border-dashed border-[#ccc] rounded-xl text-[#666] font-bold text-base cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 hover:border-[#ff9800] hover:text-[#ff9800] hover:bg-[#fff3e0]">
+                    <i class="fa-solid fa-plus"></i> Add Another Service
+                </button>
+
+                <div class="form-actions mt-8">
+                    <button type="submit" class="btn-submit bg-[#ff9800] text-white p-4 border-none rounded-lg text-base font-bold cursor-pointer transition-all duration-300 flex justify-center items-center gap-2.5 w-full hover:bg-[#e68a00] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,152,0,0.3)]">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Save All Services
+                    </button>
+                </div>
+            </form>
+            
+            <div id="serviceMessage" class="skill-message fixed top-6 left-1/2 -translate-x-1/2 w-[min(92vw,420px)] rounded-xl opacity-0 -translate-y-3 z-[9999999] transition-all duration-300 pointer-events-none" aria-live="polite"></div>
+        </div>
+    </main>
+
+    <%- include('./partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<%- include('./partials/head', { 
+    title: formData ? 'Edit Project' : 'Add New Project'
+}) %>
+
+<body class="bg-[#f0f2f5] text-[#333] font-sans flex flex-col min-h-screen">
+
+    <%- include('./partials/navBar') %>
+
+    <main class="flex-grow flex justify-center items-center py-20 px-[5%] mt-16 max-[768px]:px-[15px] max-[768px]:py-[60px] max-[768px]:mt-[60px]">
+
+        <div class="form-wrapper add-project-card bg-white max-w-[850px] w-full p-10 rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-[#e0e0e0] max-[768px]:p-6">
+
+            <form class="modern-form flex flex-col gap-5" id="addProject" method="POST">
+
+                <div class="form-header text-center mb-[35px] pb-5 border-b border-[#eee]">
+
+                    <h2 class="text-[2rem] text-[#111] font-extrabold m-0 mb-2.5 tracking-[-0.5px] max-[480px]:text-[1.6rem]">
+                        <%= formData ? 'Edit Project' : 'Add New Project' %>
+                    </h2>
+
+                    <p class="text-[#666] text-[0.95rem] m-0">
+                        Fill in the details below to showcase your latest work.
+                    </p>
+
+                </div>
+
+                <!-- Project Title -->
+                <div class="input-group flex flex-col gap-2 mb-2.5">
+
+                    <label for="title" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                        Project Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="e.g. FormAssist Super App"
+                        value="<%= formData?.title || '' %>"
+                        required
+                        class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
+                    >
+
+                </div>
+
+                <!-- Image URL -->
+                <div class="input-group flex flex-col gap-2 mb-2.5">
+
+                    <label for="imageUrl" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                        Image Path / URL
+                    </label>
+
+                    <input
+                        type="text"
+                        id="imageUrl"
+                        name="imageUrl"
+                        placeholder="e.g. ./assets/formassist.png"
+                        value="<%= formData?.imageUrl || '' %>"
+                        required
+                        class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
+                    >
+
+                </div>
+
+                <!-- Skills -->
+                <div class="input-group flex flex-col gap-2 mb-2.5">
+
+                    <label for="skills" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                        Technologies Used
+                    </label>
+
+                    <input
+                        type="text"
+                        id="skills"
+                        name="skills"
+                        placeholder="MongoDB, Express..."
+                        value="<%= formData?.skills || '' %>"
+                        required
+                        class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
+                    >
+
+                </div>
+
+                <!-- Description -->
+                <div class="input-group flex flex-col gap-2 mb-2.5">
+
+                    <label for="description" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                        Project Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="3"
+                        required
+                        class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
+                    ><%= formData?.description || '' %></textarea>
+
+                </div>
+
+                <!-- Links -->
+                <div class="input-row flex gap-[25px] max-[768px]:flex-col max-[768px]:gap-5">
+
+                    <div class="input-group flex-1 flex flex-col gap-2 mb-2.5">
+
+                        <label for="sourceUrl" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                            Source Code Link
+                        </label>
+
+                        <input
+                            type="url"
+                            id="sourceUrl"
+                            name="sourceUrl"
+                            placeholder="https://github.com/..."
+                            value="<%= formData?.sourceUrl || '' %>"
+                            required
+                            class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
+                        >
+
+                    </div>
+
+                    <div class="input-group flex-1 flex flex-col gap-2 mb-2.5">
+
+                        <label for="liveUrl" class="font-bold text-[0.85rem] text-[#444] uppercase tracking-[0.5px]">
+                            Live Preview Link
+                        </label>
+
+                        <input
+                            type="url"
+                            id="liveUrl"
+                            name="liveUrl"
+                            placeholder="https://..."
+                            value="<%= formData?.liveUrl || '' %>"
+                            required
+                            class="w-full p-3.5 border border-[#ddd] rounded-lg text-base text-[#333] bg-[#fafafa] font-sans transition-all duration-300 focus:outline-none focus:border-[#ff9800] focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,152,0,0.15)]"
+                        >
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="<%= formData?._id || '' %>"
+                        >
+
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn-submit bg-[#ff9800] text-white p-4 border-none rounded-lg text-base font-bold cursor-pointer transition-all duration-300 flex justify-center items-center gap-2.5 w-full hover:bg-[#e68a00] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,152,0,0.3)] mt-6">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <%= formData ? 'Update Project' : 'Save Project' %>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <section id="message" class="skill-message fixed top-6 left-1/2 -translate-x-1/2 w-[min(92vw,420px)] rounded-xl opacity-0 -translate-y-3 z-[9999999] transition-all duration-300 pointer-events-none" aria-live="polite"></section>
+
+    <%- include('./partials/footer') %>
+
+</body>
+</html>

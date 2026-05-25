@@ -1,0 +1,263 @@
+<%-include('./partials/head',{title:pageTitle})%>
+<body class="bg-white text-[#111] min-h-screen overflow-x-hidden">
+    <div class="top-wrapper bg-hero-gradient w-full min-h-screen flex flex-col">
+      <%-include('./partials/navBar')%>
+      
+      <main class="hero-section w-full flex-1 flex items-center justify-center px-[5%] pb-12 pt-[clamp(5rem,8vw,7rem)] relative max-[640px]:px-5 max-[640px]:pb-10 max-[640px]:pt-[120px] max-[980px]:pt-[140px]">
+        <div class="hero-inner max-w-[1280px] w-full flex items-center justify-between gap-[clamp(2rem,6vw,5rem)] flex-wrap max-[980px]:justify-center max-[980px]:text-center">
+          <div class="hero-content text-black flex-[1_1_320px] max-w-[540px] -mt-5 max-[980px]:max-w-full">
+            <p class="greeting text-[1.25rem] font-semibold mb-3 max-[640px]:text-[1.05rem]">Hi, I am</p>
+            <h1 class="name text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-[1.05] mb-3 tracking-[-0.04em] font-heading"><%= owner?.fullName || "John Doe" %></h1>
+            <p class="role text-base text-[#505050] font-semibold max-[640px]:text-[0.95rem] max-[980px]:text-[#424242]"><%= owner?.role || "Full Stack Developer" %></p> 
+            <div class="social-icons mt-8 flex gap-[0.95rem] flex-wrap max-[980px]:justify-center">
+              <a class="w-[42px] h-[42px] bg-[#d1d1d1] text-black rounded-md flex items-center justify-center text-base transition-all duration-300 hover:bg-[#b5b5b5] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="mailto:<%= owner?.email || 'hello@example.com' %>"><i class="fa-solid fa-at"></i></a>
+              <a class="w-[42px] h-[42px] bg-[#d1d1d1] text-black rounded-md flex items-center justify-center text-base transition-all duration-300 hover:bg-[#b5b5b5] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="<%= owner?.githubUrl || 'https://github.com/' %>" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a class="w-[42px] h-[42px] bg-[#d1d1d1] text-black rounded-md flex items-center justify-center text-base transition-all duration-300 hover:bg-[#b5b5b5] hover:-translate-y-[2px] max-[640px]:w-10 max-[640px]:h-10" href="<%= owner?.linkedinUrl || 'https://linkedin.com/' %>" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          
+          <div class="hero-image flex-[1_1_400px] flex flex-col items-center gap-6 relative max-[980px]:items-center">
+            <% if (admin && admin.isAdmin) { %>
+              <div class="admin-quick-actions absolute top-[15px] right-[15px] flex gap-2.5 z-10">
+                <button onclick="openUploadModal('profilePic')" class="bg-white/90 text-[#333] border-none rounded-full w-[35px] h-[35px] flex items-center justify-center shadow-[0_4px_6px_rgba(0,0,0,0.1)] cursor-pointer hover:scale-110 transition-transform" title="Upload New Photo"><i class="fa-solid fa-camera"></i></button>
+                <% if (owner?.profilePicUrl) { %>
+                  <button class="bg-white/90 text-[#dc2626] border-none rounded-full w-[35px] h-[35px] flex items-center justify-center shadow-[0_4px_6px_rgba(0,0,0,0.1)] cursor-pointer hover:scale-110 transition-transform" title="Delete Photo" onclick="deleteQuickFile('profilePic')"><i class="fa-solid fa-trash"></i></button>
+                <% } %>
+              </div>
+            <% } %>
+            <img class="w-[min(100%,460px)] h-auto max-h-[78vh] object-contain block brightness-120 rounded-[20px] max-[980px]:max-h-[60vh]" src="<%= owner?.profilePicUrl || 'https://ui-avatars.com/api/?name=John+Doe&background=random&size=300' %>" alt="<%= owner?.fullName || 'John Doe' %>">
+            <div class="infoBox w-full max-w-[480px] mx-auto bg-black/65 text-white p-8 text-[15px] font-medium rounded-xl grid gap-4 text-center z-10 relative shadow-yellow-glow -mt-[22px] max-[980px]:w-[min(100%-2.5rem,540px)] max-[980px]:mt-4 max-[640px]:p-5">
+                <div class="text-[1.1rem] font-bold tracking-[0.08em] uppercase"><%= owner?.role || "Web Developer" %></div>
+                <div class="leading-[1.7] text-white"><%= owner?.bio || "Building intuitive digital experiences with clean UI and practical backend solutions." %></div>
+                <a href="#about" class="text-[0.9rem] font-bold tracking-[0.12em] cursor-pointer text-inherit no-underline block">READ MORE</a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section class="aboutSection w-full bg-[#f7f7f7] px-[5%] py-24 text-center text-[#111] relative z-5" id="about">
+        <div class="about-container max-w-[1100px] mx-auto">
+            <div class="about-header flex justify-between items-center flex-wrap mb-8">
+                <div>
+                    <h2 class="title-box text-[2rem] font-extrabold tracking-[4px] uppercase mb-6 max-[640px]:text-[1.5rem] max-[640px]:tracking-[0.2rem]">ABOUT ME</h2>
+                    <p class="subtitle text-[1.05rem] text-[#555] max-w-[900px] mx-auto mb-16 leading-[1.7] max-[640px]:text-[0.95rem]"><%= owner?.aboutMe || "I am a passionate Front-end Developer and UI Designer dedicated to building intuitive and engaging digital experiences." %></p>
+                </div>
+                <% if (admin && admin.isAdmin) { %>
+                <div class="flex gap-3 mt-2.5">
+                    <a href="/admin/addService" class="btn-top-add bg-[#111] text-white px-[18px] py-2.5 rounded-lg text-[0.9rem] font-bold no-underline flex items-center gap-2 transition-all duration-300 hover:bg-[#333] hover:-translate-y-0.5" title="Add a new service">
+                        <i class="fa-solid fa-plus"></i> Add Service
+                    </a>
+                </div>
+                <% } %>
+            </div>
+
+            <div id="serviceActionMessage" class="skill-message" aria-live="polite"></div>
+
+            <div class="services-grid grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
+                <% if(services && services.length > 0) { %>
+                    <% services.forEach((service) => { %>
+                        <div class="service-card bg-white px-8 py-12 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-[5px] hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] text-center relative group">
+                            <% if (admin && admin.isAdmin) { %>
+                                <a href="/admin/deleteService/<%= service._id %>" class="service-delete-btn absolute top-[15px] right-[15px] text-[#dc2626] cursor-pointer" data-id="<%= service._id %>" title="Delete Service">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            <% } %>
+                            <div class="icon-wrapper w-[70px] h-[70px] bg-[#111] text-white rounded-full flex items-center justify-center text-[1.5rem] mx-auto mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:bg-black"><%- service.serviceIcon %></div>
+                            <h3 class="text-[1.15rem] font-extrabold tracking-[2px] mb-4"><%= service.serviceTitle %></h3>
+                            <p class="text-[0.95rem] text-[#666] leading-[1.6]"><%= service.serviceDesc %></p>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p class="col-span-full text-center">Abhi tak koi service add nahi ki gayi hai.</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION (DYNAMIC) -->
+    <section class="skillsSection w-full bg-[#f0f2f5] px-[5%] py-24 text-center" id="skills">
+        <div class="skills-container max-w-[1100px] mx-auto">
+            <!-- SKILLS HEADER WITH TOP BUTTONS -->
+            <div class="skills-header flex justify-between items-center flex-wrap mb-12">
+                <h2 class="title-box text-[2rem] font-extrabold tracking-[4px] uppercase mb-6 max-[640px]:text-[1.5rem] max-[640px]:tracking-[0.2rem]">SKILLS</h2>
+                <% if (admin && admin.isAdmin) { %>
+                <div class="flex gap-3 mt-2.5">
+                    <a href="/admin/addSkill" class="btn-top-add bg-[#111] text-white px-[18px] py-2.5 rounded-lg text-[0.9rem] font-bold no-underline flex items-center gap-2 transition-all duration-300 hover:bg-[#333] hover:-translate-y-0.5" title="Add a new skill">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </a>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="skills-content max-w-[1000px] mx-auto">
+                <div class="skill-category mb-0">
+                    <h3 class="text-[1.1rem] text-[#888] border-b-2 border-b-[#ddd] pb-2.5 mb-[25px] text-left max-[480px]:text-center">MY SKILLS:</h3>
+                    <div id="skillActionMessage" class="skill-message" aria-live="polite"></div>
+                    <div class="skills-grid grid grid-cols-[repeat(auto-fit,140px)] gap-5 items-stretch justify-center max-[768px]:grid-cols-3 max-[480px]:grid-cols-2">
+                        <% if(skills && skills.length > 0) { %>
+                            <% skills.forEach((skill) => { %>
+                                <div class="skill-item bg-white px-4 py-6 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.03)] border border-[rgba(0,0,0,0.02)] transition-all duration-300 ease-in-out flex flex-col items-center justify-center gap-3 w-[min(100%,140px)] min-h-[160px] text-center relative hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.08)] hover:border-[#eaeaea]">
+                                    <% if (admin && admin.isAdmin) { %>
+                                    <a href="/admin/deleteSkill/<%= skill._id %>" class="skill-delete-btn absolute top-2.5 right-2.5 w-[30px] h-[30px] border-none rounded-full bg-[#e74c3c] text-white flex items-center justify-center cursor-pointer shadow-[0_6px_14px_rgba(231,76,60,0.25)] hover:bg-[#c0392b]" data-id="<%= skill._id %>" title="Delete Skill">
+                                        <i class="fa-solid fa-trash text-[0.85rem]"></i>
+                                    </a>
+                                    <% } %>
+                                    <div class="text-[45px] m-0 leading-none">
+                                      <%- skill.skillIcon || skill.iconCode %>
+                                    </div>
+                                    <p class="text-[0.85rem] font-bold tracking-[1px] text-[#333] leading-[1.4]"><%= skill.skillTitle || skill.title %></p>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <p class="col-span-full text-center">Abhi tak koi skill add nahi ki gayi hai.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PROJECTS SECTION -->
+   <section class="projectSection w-full bg-[#fafafa] px-[5%] py-24 text-[#111]" id="projects">
+    <!-- PROJECTS HEADER WITH TOP BUTTONS -->
+    <div class="projects-header text-center mb-16">
+        <h2 class="title-box text-[2rem] font-extrabold tracking-[4px] uppercase mb-6 max-[640px]:text-[1.5rem] max-[640px]:tracking-[0.2rem]">RECENT WORKS</h2>
+        <p class="subtitle text-[1.05rem] text-[#555] max-w-[600px] mx-auto max-[640px]:text-[0.95rem]">Crafting high-performance digital experiences with precision and care</p>
+        <% if (admin && admin.isAdmin) { %>
+        <div class="flex gap-3 justify-center mt-4">
+            <a href="/admin/addProject" class="btn-top-add bg-[#111] text-white px-[18px] py-2.5 rounded-lg text-[0.9rem] font-bold no-underline flex items-center gap-2 transition-all duration-300 hover:bg-[#333] hover:-translate-y-0.5" title="Add a new project">
+                <i class="fa-solid fa-plus"></i> Add
+            </a>
+        </div>
+        <% } %>
+    </div>
+
+    <div class="projects-grid grid grid-cols-[repeat(auto-fit,minmax(320px,380px))] gap-10 max-w-[1200px] mx-auto justify-center max-[768px]:grid-cols-1">
+        <div id="projectActionMessage" class="skill-message col-span-full" aria-live="polite"></div>
+        <% if(projects && projects.length > 0) { %>
+            <% projects.forEach((project) => { %>
+                <div class="project-card bg-white rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-[rgba(0,0,0,0.04)] flex flex-col relative group hover:-translate-y-3 hover:shadow-[0_25px_45px_rgba(0,0,0,0.1)] hover:border-[rgba(0,0,0,0.08)]">
+                    <% if (admin && admin.isAdmin) { %>
+                    <div class="card-admin-actions absolute top-[15px] right-[15px] flex gap-2.5 z-10">
+                        <a
+                            href="/admin/editProject/<%= project._id %>"
+                            class="action-icon edit-icon w-[38px] h-[38px] rounded-full border-none flex items-center justify-center text-base cursor-pointer no-underline text-white shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-all duration-300 bg-[#f39c12] hover:bg-[#e67e22] hover:scale-110"
+                            title="Edit Project"
+                        >
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a
+                            href="/admin/deleteProject/<%= project._id %>"
+                            class="action-icon delete-icon w-[38px] h-[38px] rounded-full border-none flex items-center justify-center text-base cursor-pointer no-underline text-white shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-all duration-300 bg-[#e74c3c] hover:bg-[#c0392b] hover:scale-110"
+                            title="Delete Project"
+                        >
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                    <% } %>
+                    <img class="project-img w-full h-[220px] object-cover border-b border-b-[#f0f0f0] bg-[#e5e5e5] transition-transform duration-600 group-hover:scale-105" src="<%=project.imageUrl%>" alt="<%=project.title%>">
+                    <div class="project-content p-8 flex flex-col flex-grow bg-white relative z-10">
+                        <div class="skills flex flex-wrap gap-2 mb-5">
+                            <% 
+                               let skillsArray = project.skills ? project.skills.split(',') : [];
+                               skillsArray.forEach(skill => {
+                            %>
+                                <p class="bg-[#f8f9fa] text-[#444] text-[0.75rem] font-bold uppercase px-3.5 py-1.5 rounded-full tracking-[0.5px] border border-[#ebebeb] transition-all duration-300 group-hover:bg-white group-hover:border-[#ddd]"><%= skill.trim() %></p>
+                            <% }) %>
+                        </div>
+                        <h3 class="project-title text-[1.4rem] font-extrabold mb-3 text-[#111] tracking-[-0.3px]"><%=project.title%></h3>
+                        <p class="project-desc text-[0.95rem] text-[#666] leading-[1.7] mb-8 flex-grow"><%=project.description%></p>
+                        <div class="project-actions flex gap-4 mt-auto">
+                            <a class="btn-source flex-1 py-3 text-[0.9rem] font-bold rounded-[10px] cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 no-underline bg-[#f8f9fa] text-[#111] border border-[#ddd] hover:bg-[#e9ecef] hover:border-[#ccc]" href="<%=project.sourceUrl%>" target="_blank"><i class="fa-brands fa-github transition-transform duration-300"></i> Source</a>
+                            <a class="btn-live flex-1 py-3 text-[0.9rem] font-bold rounded-[10px] cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 no-underline bg-[#111] text-white border border-[#111] hover:bg-[#222] hover:shadow-[0_8px_15px_rgba(0,0,0,0.15)] group/btn" href="<%=project.liveUrl%>" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1"></i> Live</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="text-center col-span-full">Abhi tak koi project add nahi kiya gaya hai.</p>
+        <% } %>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section bg-white px-[5%] py-24 text-[#111] mt-[60px]" id="contact">
+    <div class="contact-container max-w-[1100px] mx-auto">
+        <div class="contact-header text-center mb-16">
+            <h2 class="title-box text-[2rem] font-extrabold tracking-[4px] uppercase mb-4 max-[640px]:text-[1.5rem] max-[640px]:tracking-[0.2rem]">GET IN TOUCH</h2>
+            <p class="subtitle text-[1.05rem] text-[#555] max-w-[900px] mx-auto leading-[1.7] max-[640px]:text-[0.95rem]">Have a project in mind or want to collaborate? Let's talk about it.</p>
+        </div>
+
+        <div class="contact-wrapper grid grid-cols-[1fr_1.5fr] gap-16 bg-[#f9fafb] p-12 rounded-[20px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-[rgba(0,0,0,0.03)] max-[980px]:grid-cols-1 max-[980px]:p-8 max-[640px]:p-6">
+            <div class="contact-info">
+                <h3 class="text-[1.8rem] font-extrabold mb-4 text-[#111]">Let's Connect</h3>
+                <p class="text-[#555] leading-[1.7] mb-8 text-[1.05rem]">I'm currently looking for new opportunities in development and design. Whether you have a question or just want to say hi, my inbox is always open!</p>
+                
+                <ul class="info-list list-none m-0 p-0">
+                    <li class="flex items-center gap-[15px] mb-6 text-[1.05rem] font-semibold text-[#333]">
+                        <div class="bg-[#111] text-white w-[45px] h-[45px] rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-envelope text-[1.1rem]"></i>
+                        </div>
+                        <span><%= owner?.email || "hello@example.com" %></span>
+                    </li>
+                    <li class="flex items-center gap-[15px] mb-6 text-[1.05rem] font-semibold text-[#333]">
+                        <div class="bg-[#111] text-white w-[45px] h-[45px] rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-phone text-[1.1rem]"></i>
+                        </div>
+                        <span><%= owner?.phone || "+91 00000 00000" %></span>
+                    </li>
+                    <li class="flex items-center gap-[15px] mb-6 text-[1.05rem] font-semibold text-[#333]">
+                        <div class="bg-[#111] text-white w-[45px] h-[45px] rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-location-dot text-[1.1rem]"></i>
+                        </div>
+                        <span>Indore, Madhya Pradesh</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contact-form-container">
+                <form id="contactForm" class="contact-form flex flex-col gap-5">
+                    <div id="contactMessage" class="skill-message mb-2.5" aria-live="polite"></div>
+                    <div class="input-group flex gap-5 max-[768px]:flex-col">
+                        <input type="text" name="name" placeholder="Your Name" required class="flex-1 w-full p-4 border border-[#ddd] rounded-lg text-[0.95rem] bg-white font-sans transition-all duration-300 focus:outline-none focus:border-[#111] focus:shadow-[0_0_0_4px_rgba(17,17,17,0.1)]">
+                        <input type="email" name="email" placeholder="Your Email" required class="flex-1 w-full p-4 border border-[#ddd] rounded-lg text-[0.95rem] bg-white font-sans transition-all duration-300 focus:outline-none focus:border-[#111] focus:shadow-[0_0_0_4px_rgba(17,17,17,0.1)]">
+                    </div>
+                    <input type="text" name="subject" placeholder="Subject" required class="w-full p-4 border border-[#ddd] rounded-lg text-[0.95rem] bg-white font-sans transition-all duration-300 focus:outline-none focus:border-[#111] focus:shadow-[0_0_0_4px_rgba(17,17,17,0.1)]">
+                    <textarea name="message" placeholder="Your Message" rows="5" required class="w-full p-4 border border-[#ddd] rounded-lg text-[0.95rem] bg-white font-sans transition-all duration-300 focus:outline-none focus:border-[#111] focus:shadow-[0_0_0_4px_rgba(17,17,17,0.1)]"></textarea>
+                    <button type="submit" class="btn-submit bg-[#111] text-white p-4 border-none rounded-lg text-base font-bold cursor-pointer transition-all duration-300 flex items-center justify-center gap-2.5 mt-2.5 hover:bg-[#333] hover:-translate-y-0.5" id="contactSubmitBtn">
+                        Send Message <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Floating DevDoor Icon -->
+<section id="devDoorSection" class="floating-devdoor fixed bottom-[50px] right-[40px] z-[9999] max-[768px]:bottom-[25px] max-[768px]:right-[25px]" style="display: none;">
+    <a href="/admin/devDoor" class="devdoor-btn flex justify-center items-center w-[60px] h-[60px] bg-[#111] text-white rounded-full no-underline text-[24px] shadow-[0_10px_25px_rgba(0,0,0,0.2)] transition-all duration-300 ease-in-out relative hover:-translate-y-1.5 hover:scale-105 hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)] hover:bg-[#333] hover:text-[#47a248] max-[768px]:w-[50px] max-[768px]:h-[50px] max-[768px]:text-[20px]" title="Go to DevDoor">
+        <i class="fa-solid fa-laptop-code"></i>
+    </a>
+</section>
+
+<!-- Quick Upload Modal -->
+<div id="quickUploadModal" class="modal-overlay fixed top-0 left-0 w-full h-full bg-black/50 z-[9999] justify-center items-center" style="display: none;">
+    <div class="modal-content bg-white p-6 rounded-xl max-w-[400px] w-[90%] text-center shadow-[0_10px_25px_rgba(0,0,0,0.2)]">
+        <h3 id="uploadModalTitle" class="mt-0 mb-5 text-[#333] font-bold text-xl">Upload File</h3>
+        
+        <input type="file" id="quickFileInput" class="mb-5 w-full p-2.5 border border-dashed border-[#ccc] rounded-lg cursor-pointer">
+        
+        <div id="uploadStatusMsg" class="mb-[15px] font-bold text-[0.9rem]"></div>
+
+        <div class="flex gap-2.5 justify-center">
+            <button onclick="closeUploadModal()" class="px-4 py-2 border-none rounded-md bg-[#eee] cursor-pointer text-[#333] font-bold hover:bg-[#ddd]">Cancel</button>
+            <button onclick="submitQuickUpload()" id="quickUploadBtn" class="px-4 py-2 border-none rounded-md bg-[#ff9800] text-white cursor-pointer font-bold hover:bg-[#f57c00]">Upload & Save</button>
+        </div>
+    </div>
+</div>
+
+<%-include('./partials/footer')%>
+</body>
+</html>
