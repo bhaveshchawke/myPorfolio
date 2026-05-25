@@ -25,7 +25,7 @@
                 <% } %>
               </div>
             <% } %>
-            <img class="w-[min(100%,320px)] h-auto object-contain block rounded-[24px] shadow-[0_20px_40px_rgba(0,0,0,0.12)] border-4 border-white transition-transform duration-500 hover:scale-[1.02] max-[980px]:w-[min(100%,280px)] bg-white" src="<%= owner?.profilePicUrl || 'https://ui-avatars.com/api/?name=John+Doe&background=random&size=300' %>" alt="<%= owner?.fullName || 'John Doe' %>">
+            <img class="w-[min(100%,320px)] h-auto object-contain block brightness-120 rounded-[20px] transition-transform duration-500 hover:scale-[1.02] max-[980px]:w-[min(100%,280px)]" src="<%= owner?.profilePicUrl || 'https://ui-avatars.com/api/?name=John+Doe&background=random&size=300' %>" alt="<%= owner?.fullName || 'John Doe' %>">
             <div class="infoBox w-full max-w-[480px] mx-auto bg-black/65 text-white p-8 text-[15px] font-medium rounded-xl grid gap-4 text-center z-10 relative shadow-yellow-glow -mt-[22px] max-[980px]:w-[min(100%-2.5rem,540px)] max-[980px]:mt-4 max-[640px]:p-5">
                 <div class="text-[1.1rem] font-bold tracking-[0.08em] uppercase"><%= owner?.role || "Web Developer" %></div>
                 <div class="leading-[1.7] text-white"><%= owner?.bio || "Building intuitive digital experiences with clean UI and practical backend solutions." %></div>
