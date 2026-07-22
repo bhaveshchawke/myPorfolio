@@ -42,6 +42,7 @@ app.use(async (req, res, next) => {
   res.locals.admin = admin;
 
   try {
+    await connectDB();
     const db = getDB();
     if (db) {
       res.locals.owner = await db.collection("adminData").findOne({});
@@ -57,8 +58,13 @@ app.use(async (req, res, next) => {
 
 app.use(homeRouter);
 app.use("/admin", adminRouter);
-connectDB().then(() => {
-  app.listen(port, () => {
-    console.log(`server is listning on port:${port}`);
+
+if (process.env.VERCEL) {
+  module.exports = app;
+} else {
+  connectDB().then(() => {
+    app.listen(port, () => {
+      console.log(`server is listning on port:${port}`);
+    });
   });
-});
+}
