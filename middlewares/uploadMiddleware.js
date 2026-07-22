@@ -2,11 +2,10 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Temp folder for uploads (Cloudinary pe upload hone ke baad delete ho jaayegi)
-const tempDir = path.join(__dirname, "..", "temp_uploads");
-if (!fs.existsSync(tempDir)) {
-  fs.mkdirSync(tempDir, { recursive: true });
-}
+const os = require("os");
+
+// Temp folder for uploads (Vercel me sirf /tmp writable hota hai)
+const tempDir = os.tmpdir();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
