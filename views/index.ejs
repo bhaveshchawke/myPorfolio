@@ -139,7 +139,7 @@
         <div id="projectActionMessage" class="skill-message col-span-full" aria-live="polite"></div>
         <% if(projects && projects.length > 0) { %>
             <% projects.forEach((project) => { %>
-                <div class="project-card bg-white rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-[rgba(0,0,0,0.04)] flex flex-col relative group hover:-translate-y-3 hover:shadow-[0_25px_45px_rgba(0,0,0,0.1)] hover:border-[rgba(0,0,0,0.08)]">
+                <div class="project-card bg-white rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-[#ddd] flex flex-col relative group hover:-translate-y-3 hover:shadow-[0_25px_45px_rgba(0,0,0,0.1)] hover:border-[#bbb]">
                     <% if (admin && admin.isAdmin) { %>
                     <div class="card-admin-actions absolute top-[15px] right-[15px] flex gap-2.5 z-10">
                         <a
@@ -305,7 +305,7 @@
             <p class="subtitle text-[1.05rem] text-[#555] max-w-[900px] mx-auto leading-[1.7] max-[640px]:text-[0.95rem]">Have a project in mind or want to collaborate? Let's talk about it.</p>
         </div>
 
-        <div class="contact-wrapper grid grid-cols-[1fr_1.5fr] gap-16 bg-[#f9fafb] p-12 rounded-[20px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-[rgba(0,0,0,0.03)] max-[980px]:grid-cols-1 max-[980px]:p-8 max-[640px]:p-6">
+        <div class="contact-wrapper w-full max-w-full overflow-hidden grid grid-cols-[1fr_1.5fr] gap-16 bg-[#f9fafb] p-12 rounded-[20px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-[#eee] max-[980px]:grid-cols-1 max-[980px]:p-8 max-[640px]:p-6 max-[640px]:gap-10">
             <div class="contact-info">
                 <h3 class="text-[1.8rem] font-extrabold mb-4 text-[#111]">Let's Connect</h3>
                 <p class="text-[#555] leading-[1.7] mb-8 text-[1.05rem]">I'm currently looking for new opportunities in development and design. Whether you have a question or just want to say hi, my inbox is always open!</p>
@@ -315,13 +315,13 @@
                         <div class="bg-[#111] text-white w-[45px] h-[45px] rounded-full flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-envelope text-[1.1rem]"></i>
                         </div>
-                        <span><%= owner?.email || "hello@example.com" %></span>
+                        <span class="break-words break-all"><%= owner?.email || "hello@example.com" %></span>
                     </li>
                     <li class="flex items-center gap-[15px] mb-6 text-[1.05rem] font-semibold text-[#333]">
                         <div class="bg-[#111] text-white w-[45px] h-[45px] rounded-full flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-phone text-[1.1rem]"></i>
                         </div>
-                        <span><%= owner?.phone || "+91 00000 00000" %></span>
+                        <span class="break-words"><%= owner?.phone || "+91 00000 00000" %></span>
                     </li>
                     <li class="flex items-center gap-[15px] mb-6 text-[1.05rem] font-semibold text-[#333]">
                         <div class="bg-[#111] text-white w-[45px] h-[45px] rounded-full flex items-center justify-center shrink-0">
