@@ -70,8 +70,8 @@ if (devDoorTrigger) {
     e.preventDefault();
     const now = Date.now();
     
-    // If more than 600ms since last click, reset sequence
-    if (now - lastClickTime > 600) {
+    // If more than 400ms since last click, reset sequence
+    if (now - lastClickTime > 400) {
         clickCount = 0; 
     }
     
@@ -83,15 +83,14 @@ if (devDoorTrigger) {
         devDoorSection.style.display = (devDoorSection.style.display === "none" || devDoorSection.style.display === "") ? "block" : "none";
       }
       clickCount = 0; 
-      clearTimeout(clickTimer); 
     } else {
-      clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => {
-        if (clickCount === 1) {
-          window.location.href = "/"; 
-        }
-        clickCount = 0;
-      }, 600); 
+      // Immediate action - NO DELAY
+      if (window.location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState("", document.title, window.location.pathname + window.location.search);
+      } else {
+        window.location.href = "/"; 
+      }
     }
   });
 }

@@ -7,6 +7,7 @@ const homePage = async (req, res) => {
     const projects = await db.collection("FormData").find({}).toArray();
     const skills = await db.collection("Skills").find({}).toArray();
     const services = await db.collection("Services").find({}).toArray();
+    const certificates = await db.collection("Certificates").find({}).toArray();
     let admin = req.session.admin || null;
     // Sirf tabhi admin pass karo jab email match ho
     if (admin && admin.email !== process.env.ADMIN_EMAIL) {
@@ -18,11 +19,12 @@ const homePage = async (req, res) => {
       projects: projects,
       skills: skills,
       services: services,
+      certificates: certificates,
     });
   } catch (error) {
     console.error("Data laane mein error:", error);
     // Error hone par khali array bhej dein taaki page na fate
-    res.render("index", { projects: [], skills: [], services: [], admin: null });
+    res.render("index", { projects: [], skills: [], services: [], certificates: [], admin: null });
   }
 };
 

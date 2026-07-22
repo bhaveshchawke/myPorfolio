@@ -693,6 +693,121 @@ const logoutAdmin = (req, res) => {
     res.redirect("/");
   });
 };
+// ---- CERTIFICATES SECTION ----
+const getAddCertificatePage = (req, res) => {
+  res.render("addCertificate", {
+    formData: null,
+    pageTitle: "Add-Certificate"
+  });
+};
+
+const addCertificate = async (req, res) => {
+  const { id, title, description } = req.body;
+  const db = getDB();
+
+  try {
+    const formData = {
+      title: title || "",
+      description,
+    };
+
+    let existingCertificate = null;
+    if (id) {
+      existingCertificate = await db.collection("Certificates").findOne({ _id: new ObjectId(id) });
+    }
+
+    // Handle Image Upload
+    if (req.files && req.files.certificateImage && req.files.certificateImage[0]) {
+      const imgFile = req.files.certificateImage[0];
+      
+      // Delete old image if exists
+      if (existingCertificate && existingCertificate.imagePublicId) {
+        try {
+          await deleteFromCloudinary(existingCertificate.imagePublicId, "image");
+        } catch (e) {
+          console.error("Old certificate image delete error:", e.message);
+        }
+      }
+
+      // Upload new image
+      const uploadResult = await uploadToCloudinary(imgFile.path, "portfolio/certificates", "image");
+      formData.imageUrl = uploadResult.url;
+      formData.imagePublicId = uploadResult.publicId;
+    } else if (existingCertificate) {
+      // Keep existing image if no new file is uploaded
+      formData.imageUrl = existingCertificate.imageUrl;
+      formData.imagePublicId = existingCertificate.imagePublicId;
+    } else {
+      // If it's a new certificate and no image is uploaded
+      return res.status(400).json({ success: false, message: "Certificate image is required!" });
+    }
+
+    if (id) {
+      await db
+        .collection("Certificates")
+        .updateOne({ _id: new ObjectId(id) }, { $set: formData });
+
+      return res.status(200).json({
+        success: true,
+        message: "Certificate updated successfully",
+      });
+    }
+
+    await db.collection("Certificates").insertOne(formData);
+
+    res.status(200).json({
+      success: true,
+      message: "Certificate added successfully",
+    });
+  } catch (error) {
+    console.error("Add/Edit Certificate Error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getEditCertificatePage = async (req, res) => {
+  const db = getDB();
+  const { id } = req.params;
+  try {
+    const certificate = await db
+      .collection("Certificates")
+      .findOne({ _id: new ObjectId(id) });
+    res.render("addCertificate", { formData: certificate, pageTitle: "Edit-Certificate" });
+  } catch (error) {
+    console.error("Edit certificate page error:", error);
+    res.status(500).send("<h3>Oops! Kuch galat ho gaya. Please try again.</h3>");
+  }
+};
+
+const deleteCertificate = async (req, res) => {
+  const { id } = req.params;
+  const db = getDB();
+  try {
+    const certificate = await db.collection("Certificates").findOne({ _id: new ObjectId(id) });
+    
+    if (certificate && certificate.imagePublicId) {
+      try {
+        await deleteFromCloudinary(certificate.imagePublicId, "image");
+      } catch (err) {
+        console.error("Cloudinary image delete error:", err.message);
+      }
+    }
+
+    const result = await db.collection("Certificates").deleteOne({ _id: new ObjectId(id) });
+    
+    if (result.deletedCount === 1) {
+      res.status(200).json({ message: "Certificate delete ho gaya!" });
+    } else {
+      res.status(404).json({ message: "Is ID ka koi certificate database me nahi mila." });
+    }
+  } catch (error) {
+    console.error("Delete Certificate Error:", error);
+    res.status(500).json({ message: "Database error aa gaya." });
+  }
+};
 
 module.exports = {
   getDevDoor,
@@ -714,4 +829,8 @@ module.exports = {
   deleteResume,
   sendOtp,
   uploadQuickFile,
+  getAddCertificatePage,
+  addCertificate,
+  getEditCertificatePage,
+  deleteCertificate,
 };

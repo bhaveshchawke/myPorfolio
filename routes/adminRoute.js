@@ -19,6 +19,10 @@ const {
   deleteResume,
   sendOtp,
   uploadQuickFile,
+  getAddCertificatePage,
+  addCertificate,
+  getEditCertificatePage,
+  deleteCertificate,
 } = require("../controllers/adminDoorController");
 const { checkAdminAuth } = require("../middlewares/authMiddleware");
 const { handleUpload } = require("../middlewares/uploadMiddleware");
@@ -47,6 +51,12 @@ adminRoute.delete("/deleteSkill/:id", checkAdminAuth, deleteSkill);
 adminRoute.get("/addService", checkAdminAuth, getAddServices);
 adminRoute.post("/addService", checkAdminAuth, postAddServices);
 adminRoute.delete("/deleteService/:id", checkAdminAuth, deleteService);
+
+// Certificates Section
+adminRoute.get("/addCertificate", checkAdminAuth, getAddCertificatePage);
+adminRoute.get("/editCertificate/:id", checkAdminAuth, getEditCertificatePage);
+adminRoute.delete("/deleteCertificate/:id", checkAdminAuth, deleteCertificate);
+adminRoute.post("/addCertificate/add", checkAdminAuth, handleUpload, addCertificate);
 
 // Cloudinary file delete routes
 adminRoute.delete("/deleteProfilePic", checkAdminAuth, deleteProfilePic);

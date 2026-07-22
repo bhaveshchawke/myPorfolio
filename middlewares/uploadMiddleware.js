@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 // File filter — sirf allowed types
 const fileFilter = (req, file, cb) => {
-  if (file.fieldname === "profilePic" || file.fieldname === "projectImage") {
+  if (file.fieldname === "profilePic" || file.fieldname === "projectImage" || file.fieldname === "certificateImage") {
     // Sirf images allow
     if (file.mimetype.startsWith("image/")) {
       cb(null, true);
@@ -53,6 +53,7 @@ const uploadFields = upload.fields([
   { name: "profilePic", maxCount: 1 },
   { name: "resume", maxCount: 1 },
   { name: "projectImage", maxCount: 1 },
+  { name: "certificateImage", maxCount: 1 },
 ]);
 
 // Multer error handler wrapper — taaki multer errors properly handle ho
