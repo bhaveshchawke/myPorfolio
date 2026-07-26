@@ -135,11 +135,11 @@
         <% } %>
     </div>
 
-    <div class="projects-grid grid grid-cols-[repeat(auto-fit,minmax(320px,380px))] gap-10 max-w-[1200px] mx-auto justify-center max-[768px]:grid-cols-1">
+    <div class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1200px] mx-auto justify-center">
         <div id="projectActionMessage" class="skill-message col-span-full" aria-live="polite"></div>
         <% if(projects && projects.length > 0) { %>
             <% projects.forEach((project) => { %>
-                <div class="project-card bg-white rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-[#ddd] flex flex-col relative group hover:-translate-y-3 hover:shadow-[0_25px_45px_rgba(0,0,0,0.1)] hover:border-[#bbb]">
+                <div class="project-card h-full bg-white rounded-[20px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-[#ddd] flex flex-col relative group hover:-translate-y-3 hover:shadow-[0_25px_45px_rgba(0,0,0,0.1)] hover:border-[#bbb]">
                     <% if (admin && admin.isAdmin) { %>
                     <div class="card-admin-actions absolute top-[15px] right-[15px] flex gap-2.5 z-10">
                         <a
